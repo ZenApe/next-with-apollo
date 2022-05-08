@@ -20,6 +20,13 @@ export default function initApollo<TCache = any>(
   }
   if (!_apolloClient) {
     _apolloClient = getClient<TCache>(clientFn, options);
+    // @ts-ignore
+    window._apolloClient = _apolloClient;
+    // @ts-ignore
+    if (typeof window._onSetApolloClient === 'function') {
+      // @ts-ignore
+      window._onSetApolloClient(_apolloClient);
+    }
   }
 
   return _apolloClient;
